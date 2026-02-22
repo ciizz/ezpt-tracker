@@ -102,11 +102,8 @@ export default function PlayersPage() {
               <tr key={player.id} className="border-b border-gray-800/50 hover:bg-gray-800/30">
                 <td className={`px-4 py-3 font-medium ${!player.isActive ? "text-gray-500" : "text-white"}`}>
                   <Link href={playerLink(player.id)} className="hover:text-green-400 transition-colors">
-                    {player.name}
+                    {player.isGuest ? <span className="text-gray-500">{player.name}</span> : player.name}
                   </Link>
-                  {player.isGuest && (
-                    <span className="ml-2 text-xs text-gray-500">Guest</span>
-                  )}
                 </td>
                 {isAdmin && (
                   <td className="px-4 py-3 text-right">

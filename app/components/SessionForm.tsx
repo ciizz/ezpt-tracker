@@ -230,7 +230,7 @@ export default function SessionForm({ mode, sessionId, initialData }: SessionFor
                     >
                       {availablePlayers.map((pl) => (
                         <option key={pl.id} value={pl.id}>
-                          {pl.name}{pl.isGuest ? " (G)" : ""}
+                          {pl.name}
                         </option>
                       ))}
                     </select>

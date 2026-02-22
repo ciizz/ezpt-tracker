@@ -6,9 +6,9 @@ async function main() {
   // Seed game types
   const gameTypes = [
     { name: "Crazy", defaultBuyIn: 20 },
-    { name: "Texas", defaultBuyIn: 20 },
-    { name: "PLO", defaultBuyIn: 20 },
-    { name: "Pineapple", defaultBuyIn: 20 },
+    { name: "Texas", defaultBuyIn: 40 },
+    { name: "PLO", defaultBuyIn: 30 },
+    { name: "Pineapple", defaultBuyIn: 30 },
   ];
 
   for (const gt of gameTypes) {
@@ -19,31 +19,11 @@ async function main() {
     });
   }
 
-  // Seed regular players
-  const players = [
-    "ALEX",
-    "RICO",
-    "CESAR",
-    "GHADZ",
-    "SIMON",
-    "JIJ",
-    "THOMAS",
-    "EDDY",
-  ];
-
-  for (const name of players) {
-    await prisma.player.upsert({
-      where: { name },
-      update: {},
-      create: { name, isGuest: false, isActive: true },
-    });
-  }
-
   // Seed guest slot
   await prisma.player.upsert({
-    where: { name: "Guest" },
+    where: { name: "Guests" },
     update: {},
-    create: { name: "Guest", isGuest: true, isActive: true },
+    create: { name: "Guests", isGuest: true, isActive: true },
   });
 
   console.log("Seed complete.");

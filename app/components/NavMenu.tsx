@@ -30,6 +30,11 @@ export default function NavMenu() {
       <Link href="/stats" className="text-gray-300 hover:text-white transition-colors">
         Stats
       </Link>
+      {isAdmin && (
+        <Link href="/admin/game-types" className="text-gray-300 hover:text-white transition-colors">
+          Game Types
+        </Link>
+      )}
       {isAdmin ? (
         <button onClick={logout} className="text-gray-400 hover:text-white transition-colors">
           Log Out

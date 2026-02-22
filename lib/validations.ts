@@ -41,6 +41,13 @@ export const createEventSchema = z.object({
   description: z.string().optional().nullable(),
 });
 
+export const createGameTypeSchema = z.object({
+  name: z.string().min(1).max(50),
+  defaultBuyIn: z.number().positive(),
+});
+
+export const updateGameTypeSchema = createGameTypeSchema.partial();
+
 export const statsQuerySchema = z.object({
   year: z.coerce.number().int().min(2000).max(2100).optional(),
 });
