@@ -103,14 +103,6 @@ Public users (no login) can:
 
 ---
 
-## Importing Historical Data
-
-The one-time Excel import has already been run. All historical sessions are in the database.
-
-The import script (`scripts/import-excel.ts`) is kept for reference. It reads `EZPT_tracker.xlsx` using fixed column-letter mapping (A=date, B=game type, C=buy-in, D–S=player rebuys/P&L pairs, T–W=guest columns) and is idempotent — it skips sessions whose exact participant data already exists.
-
----
-
 ## Database Schema
 
 ```
