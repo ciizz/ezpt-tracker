@@ -1,0 +1,60 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
+}
+
+model Player {
+  id           Int                  @id @default(autoincrement())
+  name         String               @unique
+  isGuest      Boolean              @default(false)
+  isActive     Boolean              @default(true)
+  createdAt    DateTime             @default(now())
+  participants SessionParticipant[]
+}
+
+model GameType {
+  id           Int       @id @default(autoincrement())
+  name         String    @unique
+  defaultBuyIn Decimal   @db.Decimal(10, 2)
+  sessions     Session[]
+}
+
+model Event {
+  id          Int       @id @default(autoincrement())
+  name        String
+  startDate   DateTime?
+  endDate     DateTime?
+  description String?
+  createdAt   DateTime  @default(now())
+  sessions    Session[]
+}
+
+model Session {
+  id           Int                  @id @default(autoincrement())
+  date         DateTime             @db.Date
+  gameTypeId   Int
+  maxBuyIn     Decimal              @db.Decimal(10, 2)
+  eventId      Int?
+  notes        String?
+  createdAt    DateTime             @default(now())
+  gameType     GameType             @relation(fields: [gameTypeId], references: [id])
+  event        Event?               @relation(fields: [eventId], references: [id])
+  participants SessionParticipant[]
+}
+
+model SessionParticipant {
+  id         Int     @id @default(autoincrement())
+  sessionId  Int
+  playerId   Int
+  rebuys     Int     @default(0)
+  profitLoss Decimal @db.Decimal(10, 2)
+  session    Session @relation(fields: [sessionId], references: [id], onDelete: Cascade)
+  player     Player  @relation(fields: [playerId], references: [id])
+
+  @@unique([sessionId, playerId])
+}
