@@ -50,7 +50,7 @@ npx prisma migrate dev
 
 ### 4. Seed the database
 
-Inserts the 8 regular players, 1 guest slot, and 4 game types:
+Inserts the Guest slot and 4 default game types. Players are added through the admin UI at `/admin/game-types` and `/players`:
 
 ```bash
 npx ts-node --compiler-options '{"module":"CommonJS"}' prisma/seed.ts
@@ -94,6 +94,7 @@ Admin users can:
 - Create, edit, delete sessions
 - Add participants with rebuys and P&L
 - Add, edit, archive players
+- Add, edit, delete game types
 
 Public users (no login) can:
 - View all sessions and session details
@@ -130,6 +131,9 @@ SessionParticipant — sessionId, playerId, rebuys, profitLoss
 | POST | `/api/players` | admin | Create player |
 | PATCH | `/api/players/[id]` | admin | Update / archive player |
 | GET | `/api/game-types` | public | List game types |
+| POST | `/api/game-types` | admin | Create game type |
+| PATCH | `/api/game-types/[id]` | admin | Update game type |
+| DELETE | `/api/game-types/[id]` | admin | Delete game type (blocked if sessions exist) |
 | GET | `/api/sessions` | public | List sessions (filter: year, gameTypeId, playerId) |
 | GET | `/api/sessions/[id]` | public | Session detail + participants |
 | POST | `/api/sessions` | admin | Create session |
