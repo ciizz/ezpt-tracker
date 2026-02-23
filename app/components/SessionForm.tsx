@@ -17,7 +17,7 @@ interface GameType {
 
 interface Participant {
   playerId: number;
-  rebuys: number;
+  buyIns: number;
   profitLoss: number;
 }
 
@@ -75,7 +75,7 @@ export default function SessionForm({ mode, sessionId, initialData }: SessionFor
     if (availablePlayers.length === 0) return;
     setParticipants([
       ...participants,
-      { playerId: availablePlayers[0].id, rebuys: 1, profitLoss: 0 },
+      { playerId: availablePlayers[0].id, buyIns: 1, profitLoss: 0 },
     ]);
   }
 
@@ -215,7 +215,7 @@ export default function SessionForm({ mode, sessionId, initialData }: SessionFor
           <div className="space-y-2">
             <div className="grid grid-cols-12 gap-2 text-xs text-gray-400 uppercase tracking-wide px-1 mb-1">
               <div className="col-span-5">Player</div>
-              <div className="col-span-2 text-center">Rebuys</div>
+              <div className="col-span-2 text-center">Buy-ins</div>
               <div className="col-span-4 text-right">P&L</div>
               <div className="col-span-1"></div>
             </div>
@@ -243,8 +243,8 @@ export default function SessionForm({ mode, sessionId, initialData }: SessionFor
                   <div className="col-span-2">
                     <input
                       type="number"
-                      value={p.rebuys}
-                      onChange={(e) => updateParticipant(i, "rebuys", Number(e.target.value))}
+                      value={p.buyIns}
+                      onChange={(e) => updateParticipant(i, "buyIns", Number(e.target.value))}
                       onFocus={(e) => e.target.select()}
                       min={1}
                       className="w-full bg-gray-800 border border-gray-700 rounded px-2 py-2 text-white text-sm text-center focus:outline-none focus:border-green-500"

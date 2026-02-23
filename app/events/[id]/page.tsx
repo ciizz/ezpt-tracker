@@ -44,7 +44,7 @@ export default async function EventPage({
               <th className="px-4 py-3 text-left">#</th>
               <th className="px-4 py-3 text-left">Player</th>
               <th className="px-4 py-3 text-right">Sessions</th>
-              <th className="px-4 py-3 text-right">Total Rebuys</th>
+              <th className="px-4 py-3 text-right">Total Buy-ins</th>
               <th className="px-4 py-3 text-right">P&L</th>
             </tr>
           </thead>
@@ -58,7 +58,7 @@ export default async function EventPage({
                   </Link>
                 </td>
                 <td className="px-4 py-3 text-right text-gray-400">{ps.sessions}</td>
-                <td className="px-4 py-3 text-right text-gray-400">{ps.rebuys}</td>
+                <td className="px-4 py-3 text-right text-gray-400">{ps.buyIns}</td>
                 <td className={`px-4 py-3 text-right font-mono font-bold ${pnlColor(ps.pnl)}`}>
                   {fmt(ps.pnl)}
                 </td>

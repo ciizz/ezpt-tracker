@@ -6,8 +6,8 @@ export interface PlayerStats {
   playerName: string;
   totalPnl: number;
   totalSessions: number;
-  totalRebuys: number;
-  avgRebuysPerSession: number;
+  totalBuyIns: number;
+  avgBuyInsPerSession: number;
   avgPnlPerSession: number;
   bestSession: { sessionId: number; date: string; pnl: number } | null;
   worstSession: { sessionId: number; date: string; pnl: number } | null;
@@ -54,8 +54,8 @@ export async function getPlayerStats(
       playerName: player.name,
       totalPnl: 0,
       totalSessions: 0,
-      totalRebuys: 0,
-      avgRebuysPerSession: 0,
+      totalBuyIns: 0,
+      avgBuyInsPerSession: 0,
       avgPnlPerSession: 0,
       bestSession: null,
       worstSession: null,
@@ -64,7 +64,7 @@ export async function getPlayerStats(
   }
 
   let totalPnl = 0;
-  let totalRebuys = 0;
+  let totalBuyIns = 0;
   let bestSession: PlayerStats["bestSession"] = null;
   let worstSession: PlayerStats["worstSession"] = null;
   const pnlByGameType: Record<string, number> = {};
@@ -72,7 +72,7 @@ export async function getPlayerStats(
   for (const p of participants) {
     const pnl = toNum(p.profitLoss);
     totalPnl += pnl;
-    totalRebuys += p.rebuys;
+    totalBuyIns += p.buyIns;
 
     const gameTypeName = p.session.gameType.name;
     pnlByGameType[gameTypeName] = (pnlByGameType[gameTypeName] ?? 0) + pnl;
@@ -94,8 +94,8 @@ export async function getPlayerStats(
     playerName: player.name,
     totalPnl,
     totalSessions,
-    totalRebuys,
-    avgRebuysPerSession: totalRebuys / totalSessions,
+    totalBuyIns,
+    avgBuyInsPerSession: totalBuyIns / totalSessions,
     avgPnlPerSession: totalPnl / totalSessions,
     bestSession,
     worstSession,
@@ -138,7 +138,7 @@ export async function getEventStats(eventId: number) {
   // Aggregate per-player stats scoped to this event's sessions
   const playerMap: Record<
     number,
-    { name: string; pnl: number; sessions: number; rebuys: number }
+    { name: string; pnl: number; sessions: number; buyIns: number }
   > = {};
 
   for (const session of event.sessions) {
@@ -148,12 +148,12 @@ export async function getEventStats(eventId: number) {
           name: p.player.name,
           pnl: 0,
           sessions: 0,
-          rebuys: 0,
+          buyIns: 0,
         };
       }
       playerMap[p.playerId].pnl += toNum(p.profitLoss);
       playerMap[p.playerId].sessions += 1;
-      playerMap[p.playerId].rebuys += p.rebuys;
+      playerMap[p.playerId].buyIns += p.buyIns;
     }
   }
 

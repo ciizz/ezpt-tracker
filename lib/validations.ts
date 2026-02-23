@@ -13,7 +13,7 @@ export const updatePlayerSchema = z.object({
 
 export const participantSchema = z.object({
   playerId: z.number().int().positive(),
-  rebuys: z.number().int().min(0).default(0),
+  buyIns: z.number().int().min(1).default(1),
   profitLoss: z.number(),
 });
 

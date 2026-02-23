@@ -24,7 +24,7 @@ export default async function EditSessionPage({
     notes: session.notes ?? "",
     participants: session.participants.map((p) => ({
       playerId: p.playerId,
-      rebuys: p.rebuys,
+      buyIns: p.buyIns,
       profitLoss: Number(p.profitLoss),
     })),
   };

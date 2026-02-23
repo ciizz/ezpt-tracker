@@ -51,7 +51,7 @@ model SessionParticipant {
   id         Int     @id @default(autoincrement())
   sessionId  Int
   playerId   Int
-  rebuys     Int     @default(0)
+  buyIns     Int     @default(1) @map("buy_ins")
   profitLoss Decimal @db.Decimal(10, 2)
   session    Session @relation(fields: [sessionId], references: [id], onDelete: Cascade)
   player     Player  @relation(fields: [playerId], references: [id])

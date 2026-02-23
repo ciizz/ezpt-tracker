@@ -75,7 +75,7 @@ export default async function PlayerProfilePage({
             <StatCard label="Total P&L" value={fmt(stats.totalPnl)} valueClass={pnlColor(stats.totalPnl)} />
             <StatCard label="Sessions" value={stats.totalSessions.toString()} />
             <StatCard label="Avg P&L" value={fmt(stats.avgPnlPerSession)} valueClass={pnlColor(stats.avgPnlPerSession)} />
-            <StatCard label="Avg Rebuys" value={stats.avgRebuysPerSession.toFixed(2)} />
+            <StatCard label="Avg Buy-ins" value={stats.avgBuyInsPerSession.toFixed(2)} />
           </div>
 
           {/* Best / Worst */}
@@ -130,7 +130,7 @@ export default async function PlayerProfilePage({
               <tr className="border-b border-gray-800 text-gray-400 text-xs uppercase tracking-wide">
                 <th className="px-4 py-3 text-left">Date</th>
                 <th className="px-4 py-3 text-left">Game</th>
-                <th className="px-4 py-3 text-right">Rebuys</th>
+                <th className="px-4 py-3 text-right">Buy-ins</th>
                 <th className="px-4 py-3 text-right">P&L</th>
               </tr>
             </thead>
@@ -145,7 +145,7 @@ export default async function PlayerProfilePage({
                       </Link>
                     </td>
                     <td className="px-4 py-3 text-green-400">{p.session.gameType.name}</td>
-                    <td className="px-4 py-3 text-right text-gray-400">{p.rebuys}</td>
+                    <td className="px-4 py-3 text-right text-gray-400">{p.buyIns}</td>
                     <td className={`px-4 py-3 text-right font-mono font-semibold ${pnlColor(pnl)}`}>
                       {fmt(pnl)}
                     </td>

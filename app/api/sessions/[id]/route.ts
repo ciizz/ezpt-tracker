@@ -55,7 +55,7 @@ export async function PUT(
               participants: {
                 create: participants.map((p) => ({
                   playerId: p.playerId,
-                  rebuys: p.rebuys,
+                  buyIns: p.buyIns,
                   profitLoss: p.profitLoss,
                 })),
               },

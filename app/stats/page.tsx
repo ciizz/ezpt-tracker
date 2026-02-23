@@ -67,7 +67,7 @@ export default async function StatsPage({
               <th className="px-4 py-3 text-right">Sessions</th>
               <th className="px-4 py-3 text-right">Total P&L</th>
               <th className="px-4 py-3 text-right">Avg P&L</th>
-              <th className="px-4 py-3 text-right">Avg Rebuys</th>
+              <th className="px-4 py-3 text-right">Avg Buy-ins</th>
               <th className="px-4 py-3 text-right">Best</th>
               <th className="px-4 py-3 text-right">Worst</th>
             </tr>
@@ -96,7 +96,7 @@ export default async function StatsPage({
                     {fmt(s.avgPnlPerSession)}
                   </td>
                   <td className="px-4 py-3 text-right text-gray-400">
-                    {s.avgRebuysPerSession.toFixed(2)}
+                    {s.avgBuyInsPerSession.toFixed(2)}
                   </td>
                   <td className="px-4 py-3 text-right font-mono text-green-400">
                     {s.bestSession ? fmt(s.bestSession.pnl) : "—"}

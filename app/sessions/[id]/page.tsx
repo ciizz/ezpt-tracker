@@ -37,7 +37,7 @@ export default async function SessionDetailPage({
   const isAdmin = adminSession.isAdmin;
 
   const totalPot = session.participants.reduce(
-    (acc, p) => acc + (1 + p.rebuys) * Number(session.maxBuyIn),
+    (acc, p) => acc + p.buyIns * Number(session.maxBuyIn),
     0
   );
 
@@ -97,7 +97,7 @@ export default async function SessionDetailPage({
           <thead>
             <tr className="border-b border-gray-800 text-gray-400 text-xs uppercase tracking-wide">
               <th className="px-4 py-3 text-left">Player</th>
-              <th className="px-4 py-3 text-right">Rebuys</th>
+              <th className="px-4 py-3 text-right">Buy-ins</th>
               <th className="px-4 py-3 text-right">Total In</th>
               <th className="px-4 py-3 text-right">P&L</th>
             </tr>
@@ -105,7 +105,7 @@ export default async function SessionDetailPage({
           <tbody>
             {session.participants.map((p) => {
               const pnl = Number(p.profitLoss);
-              const totalIn = (1 + p.rebuys) * Number(session.maxBuyIn);
+              const totalIn = p.buyIns * Number(session.maxBuyIn);
               return (
                 <tr key={p.id} className="border-b border-gray-800/50 hover:bg-gray-800/30">
                   <td className="px-4 py-3">
@@ -116,7 +116,7 @@ export default async function SessionDetailPage({
                       <span className="ml-2 text-xs text-gray-500 bg-gray-800 px-1.5 py-0.5 rounded">Guest</span>
                     )}
                   </td>
-                  <td className="px-4 py-3 text-right text-gray-400">{p.rebuys}</td>
+                  <td className="px-4 py-3 text-right text-gray-400">{p.buyIns}</td>
                   <td className="px-4 py-3 text-right text-gray-400">{totalIn.toFixed(0)}</td>
                   <td className={`px-4 py-3 text-right font-mono font-semibold ${pnlColor(pnl)}`}>
                     {fmt(pnl)}
