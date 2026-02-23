@@ -75,7 +75,7 @@ export default function SessionForm({ mode, sessionId, initialData }: SessionFor
     if (availablePlayers.length === 0) return;
     setParticipants([
       ...participants,
-      { playerId: availablePlayers[0].id, rebuys: 0, profitLoss: 0 },
+      { playerId: availablePlayers[0].id, rebuys: 1, profitLoss: 0 },
     ]);
   }
 
@@ -99,6 +99,11 @@ export default function SessionForm({ mode, sessionId, initialData }: SessionFor
 
     if (participants.length === 0) {
       setError("Add at least one participant");
+      return;
+    }
+
+    if (!isBalanced) {
+      setError(`P&L must sum to 0 (currently ${totalPnl >= 0 ? "+" : ""}${totalPnl.toFixed(2)})`);
       return;
     }
 
@@ -240,7 +245,8 @@ export default function SessionForm({ mode, sessionId, initialData }: SessionFor
                       type="number"
                       value={p.rebuys}
                       onChange={(e) => updateParticipant(i, "rebuys", Number(e.target.value))}
-                      min={0}
+                      onFocus={(e) => e.target.select()}
+                      min={1}
                       className="w-full bg-gray-800 border border-gray-700 rounded px-2 py-2 text-white text-sm text-center focus:outline-none focus:border-green-500"
                     />
                   </div>
@@ -249,6 +255,7 @@ export default function SessionForm({ mode, sessionId, initialData }: SessionFor
                       type="number"
                       value={p.profitLoss}
                       onChange={(e) => updateParticipant(i, "profitLoss", Number(e.target.value))}
+                      onFocus={(e) => e.target.select()}
                       step="0.01"
                       className="w-full bg-gray-800 border border-gray-700 rounded px-2 py-2 text-white text-sm text-right focus:outline-none focus:border-green-500"
                     />

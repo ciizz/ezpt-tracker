@@ -2,8 +2,6 @@
 
 import Link from "next/link";
 import { useState, useEffect } from "react";
-import { useSearchParams } from "next/navigation";
-import YearSelect from "@/app/components/YearSelect";
 
 interface Player {
   id: number;
@@ -12,22 +10,13 @@ interface Player {
   isActive: boolean;
 }
 
-const FIRST_YEAR = 2025;
-
 export default function PlayersPage() {
-  const searchParams = useSearchParams();
-  const yearParam = searchParams.get("year");
-
   const [players, setPlayers] = useState<Player[]>([]);
   const [isAdmin, setIsAdmin] = useState(false);
   const [loading, setLoading] = useState(true);
   const [newName, setNewName] = useState("");
   const [error, setError] = useState("");
   const [saving, setSaving] = useState(false);
-
-  const currentYear = new Date().getFullYear();
-  const years = Array.from({ length: currentYear - FIRST_YEAR + 1 }, (_, i) => FIRST_YEAR + i).reverse();
-  const selectedYear = yearParam ? Number(yearParam) : currentYear;
 
   async function loadData() {
     const [playersRes, meRes] = await Promise.all([
@@ -80,13 +69,6 @@ export default function PlayersPage() {
   const activePlayers = players.filter((p) => p.isActive);
   const inactivePlayers = players.filter((p) => !p.isActive);
 
-  // Build player detail link preserving year context (omit when admin selects "All Time")
-  function playerLink(id: number) {
-    if (!isAdmin && selectedYear) return `/players/${id}?year=${selectedYear}`;
-    if (yearParam) return `/players/${id}?year=${yearParam}`;
-    return `/players/${id}`;
-  }
-
   function renderTable(list: Player[]) {
     return (
       <div className="bg-gray-900 border border-gray-800 rounded-lg overflow-hidden">
@@ -101,7 +83,7 @@ export default function PlayersPage() {
             {list.map((player) => (
               <tr key={player.id} className="border-b border-gray-800/50 hover:bg-gray-800/30">
                 <td className={`px-4 py-3 font-medium ${!player.isActive ? "text-gray-500" : "text-white"}`}>
-                  <Link href={playerLink(player.id)} className="hover:text-green-400 transition-colors">
+                  <Link href={`/players/${player.id}`} className="hover:text-green-400 transition-colors">
                     {player.isGuest ? <span className="text-gray-500">{player.name}</span> : player.name}
                   </Link>
                 </td>
@@ -126,18 +108,7 @@ export default function PlayersPage() {
   return (
     <div className="space-y-8">
       <div className="flex items-center justify-between">
-        <div>
-          <h1 className="text-2xl font-bold text-white">Players</h1>
-          {(!isAdmin || yearParam) && (
-            <p className="text-gray-400 text-sm mt-1">Season {selectedYear}</p>
-          )}
-        </div>
-        <YearSelect
-          pathname="/players"
-          years={years}
-          currentYear={yearParam ? Number(yearParam) : (!isAdmin ? currentYear : undefined)}
-          isAdmin={isAdmin}
-        />
+        <h1 className="text-2xl font-bold text-white">Players</h1>
       </div>
 
       {/* Add Player form — admin only */}
